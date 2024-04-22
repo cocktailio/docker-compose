@@ -1,11 +1,11 @@
 version: '3.7'
 services:
   phpmyadmin:
-    container_name: cocktail-io-local-phpmyadmin
+    container_name: cocktail-io-phpmyadmin
     image: phpmyadmin/phpmyadmin:latest
     restart: always
     environment:
-      PMA_HOST: cocktail-io-local-mysql
-      MYSQL_ROOT_PASSWORD: cocktail-io
+      PMA_HOST: cocktail-io-mysql
+      MYSQL_ROOT_PASSWORD: cocktail
     ports:
       - '8083:80'

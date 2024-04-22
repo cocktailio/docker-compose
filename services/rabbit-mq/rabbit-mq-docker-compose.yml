@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   rabbit-mq:
-    container_name: cocktail-io-local-rabbitmq
+    container_name: cocktail-io-rabbitmq
     image: "rabbitmq:management"
     ports:
       - "5672:5672"

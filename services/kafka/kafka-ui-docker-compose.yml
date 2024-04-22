@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   kafka-ui:
-    container_name: cocktail-io-local-kafka-ui
+    container_name: cocktail-io-kafka-ui
     image: quay.io/cloudhut/kowl
     restart: on-failure
     hostname: kafka-ui

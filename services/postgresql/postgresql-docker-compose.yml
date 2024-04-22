@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   postgresql:
-    container_name: cocktail-io-local-postgresql
+    container_name: cocktail-io-postgresql
     image: postgres:latest
     environment:
       POSTGRES_DB: cocktail-io-postgresql-db
@@ -12,4 +12,4 @@ services:
     volumes:
       - postgresql-data:/var/lib/data/postgresql
     networks:
-      - cocktail-io-local-network
+      - cocktail-io-network

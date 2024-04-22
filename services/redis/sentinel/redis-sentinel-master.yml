@@ -1,0 +1,10 @@
+version: '3.7'
+services:
+  redis-master:
+    container_name: cocktail-io-redis-sentinel-master
+    image: 'bitnami/redis:latest'
+    environment:
+      - REDIS_REPLICATION_MODE=master
+      - REDIS_PASSWORD=cocktail
+    ports:
+      - "6380:6379"

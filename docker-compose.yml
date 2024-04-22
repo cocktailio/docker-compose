@@ -5,7 +5,7 @@ services:
       file: 'services/elasticsearch/elasticsearch-docker-compose.yml'
       service: elasticsearch
     networks:
-      - cocktail-io-local-network
+      - cocktail-io-network
     volumes:
       - elasticsearch-data:/var/lib/data/elasticsearch-data
   kibana:
@@ -13,7 +13,7 @@ services:
       file: 'services/elasticsearch/kibana-docker-compose.yml'
       service: kibana
     networks:
-      - cocktail-io-local-network
+      - cocktail-io-network
     depends_on:
       - elasticsearch
   zoo:
@@ -21,13 +21,13 @@ services:
       file: 'services/kafka/zoo-docker-compose.yml'
       service: zoo
     networks:
-      - cocktail-io-local-network
+      - cocktail-io-network
   kafka:
     extends:
       file: 'services/kafka/kafka-docker-compose.yml'
       service: kafka
     networks:
-      - cocktail-io-local-network
+      - cocktail-io-network
     depends_on:
       - zoo
   kafka-ui:
@@ -40,7 +40,7 @@ services:
       - "18080:8080"
     entrypoint: ./kowl --config.filepath=/etc/kowl/config.yaml
     networks:
-      - cocktail-io-local-network
+      - cocktail-io-network
     depends_on:
       - kafka
   mongodb:
@@ -48,45 +48,75 @@ services:
       file: 'services/mongodb/mongodb-docker-compose.yml'
       service: mongodb
     networks:
-      - cocktail-io-local-network
+      - cocktail-io-network
   mysql:
     extends:
       file: 'services/mysql/mysql-docker-compose.yml'
       service: mysql
     networks:
-      - cocktail-io-local-network
+      - cocktail-io-network
   phpmyadmin:
     extends:
       file: 'services/mysql/phpmyadmin-docker-compose.yml'
       service: phpmyadmin
     networks:
-      - cocktail-io-local-network
+      - cocktail-io-network
   neo4j:
     extends:
       file: 'services/neo4j/neo4j-docker-compose.yml'
       service: neo4j
     networks:
-      - cocktail-io-local-network
+      - cocktail-io-network
   postgresql:
     extends:
       file: 'services/postgresql/postgresql-docker-compose.yml'
       service: postgresql
     networks:
-      - cocktail-io-local-network
+      - cocktail-io-network
   rabbit-mq:
     extends:
       file: 'services/rabbit-mq/rabbit-mq-docker-compose.yml'
       service: rabbit-mq
     networks:
-      - cocktail-io-local-network
+      - cocktail-io-network
   redis:
     extends:
       file: 'services/redis/redis-single-docker-compose.yml'
       service: redis
     networks:
-      - cocktail-io-local-network
+      - cocktail-io-network
+  redis-master:
+    extends:
+      file: 'services/redis/sentinel/redis-sentinel-master.yml'
+      service: redis-master
+    networks:
+      - cocktail-io-network
+  redis-slave:
+    extends:
+      file: 'services/redis/sentinel/redis-sentinel-slave.yml'
+      service: redis-slave
+    networks:
+      - cocktail-io-network
+  redis-sentinel-1:
+    extends:
+      file: 'services/redis/sentinel/redis-sentinel-1.yml'
+      service: redis-sentinel-1
+    networks:
+      - cocktail-io-network
+  redis-sentinel-2:
+    extends:
+      file: 'services/redis/sentinel/redis-sentinel-2.yml'
+      service: redis-sentinel-2
+    networks:
+      - cocktail-io-network
+  redis-sentinel-3:
+    extends:
+      file: 'services/redis/sentinel/redis-sentinel-3.yml'
+      service: redis-sentinel-3
+    networks:
+      - cocktail-io-network
 networks:
-  cocktail-io-local-network:
+  cocktail-io-network:
     driver: bridge
 volumes:
   elasticsearch-data:
@@ -106,4 +136,14 @@ volumes:
   postgresql-data:
     driver: local
   redis:
+    driver: local
+  redis-master:
+    driver: local
+  redis-slave:
+    driver: local
+  redis-sentinel-1:
+    driver: local
+  redis-sentinel-2:
+    driver: local
+  redis-sentinel-3:
     driver: local

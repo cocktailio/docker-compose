@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   neo4j:
-    container_name: cocktail-io-local-neo4j
+    container_name: cocktail-io-neo4j
     image: neo4j:latest
     restart: unless-stopped
     ports:
