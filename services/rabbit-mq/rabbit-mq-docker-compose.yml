@@ -1,0 +1,13 @@
+version: '3.7'
+services:
+  rabbit-mq:
+    container_name: cocktail-io-local-rabbitmq
+    image: "rabbitmq:management"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: cocktail-io
+      RABBITMQ_DEFAULT_PASS: cocktail-io
+    volumes:
+      - ./rabbitmq-data:/var/lib/data/rabbitmq

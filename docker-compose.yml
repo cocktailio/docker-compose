@@ -1,0 +1,109 @@
+version: '2'
+services:
+  elasticsearch:
+    extends:
+      file: 'services/elasticsearch/elasticsearch-docker-compose.yml'
+      service: elasticsearch
+    networks:
+      - cocktail-io-local-network
+    volumes:
+      - elasticsearch-data:/var/lib/data/elasticsearch-data
+  kibana:
+    extends:
+      file: 'services/elasticsearch/kibana-docker-compose.yml'
+      service: kibana
+    networks:
+      - cocktail-io-local-network
+    depends_on:
+      - elasticsearch
+  zoo:
+    extends:
+      file: 'services/kafka/zoo-docker-compose.yml'
+      service: zoo
+    networks:
+      - cocktail-io-local-network
+  kafka:
+    extends:
+      file: 'services/kafka/kafka-docker-compose.yml'
+      service: kafka
+    networks:
+      - cocktail-io-local-network
+    depends_on:
+      - zoo
+  kafka-ui:
+    extends:
+      file: 'services/kafka/kafka-ui-docker-compose.yml'
+      service: kafka-ui
+    volumes:
+      - ./config.yaml:/etc/kowl/config.yaml
+    ports:
+      - "18080:8080"
+    entrypoint: ./kowl --config.filepath=/etc/kowl/config.yaml
+    networks:
+      - cocktail-io-local-network
+    depends_on:
+      - kafka
+  mongodb:
+    extends:
+      file: 'services/mongodb/mongodb-docker-compose.yml'
+      service: mongodb
+    networks:
+      - cocktail-io-local-network
+  mysql:
+    extends:
+      file: 'services/mysql/mysql-docker-compose.yml'
+      service: mysql
+    networks:
+      - cocktail-io-local-network
+  phpmyadmin:
+    extends:
+      file: 'services/mysql/phpmyadmin-docker-compose.yml'
+      service: phpmyadmin
+    networks:
+      - cocktail-io-local-network
+  neo4j:
+    extends:
+      file: 'services/neo4j/neo4j-docker-compose.yml'
+      service: neo4j
+    networks:
+      - cocktail-io-local-network
+  postgresql:
+    extends:
+      file: 'services/postgresql/postgresql-docker-compose.yml'
+      service: postgresql
+    networks:
+      - cocktail-io-local-network
+  rabbit-mq:
+    extends:
+      file: 'services/rabbit-mq/rabbit-mq-docker-compose.yml'
+      service: rabbit-mq
+    networks:
+      - cocktail-io-local-network
+  redis:
+    extends:
+      file: 'services/redis/redis-single-docker-compose.yml'
+      service: redis
+    networks:
+      - cocktail-io-local-network
+networks:
+  cocktail-io-local-network:
+    driver: bridge
+volumes:
+  elasticsearch-data:
+    driver: local
+  zookeeper_data:
+  kafka-data:
+  neo4j_conf:
+    driver: local
+  neo4j_data:
+    driver: local
+  neo4j_import:
+    driver: local
+  neo4j_logs:
+    driver: local
+  neo4j_plugins:
+    driver: local
+  postgresql-data:
+    driver: local
+  redis:
+    driver: local

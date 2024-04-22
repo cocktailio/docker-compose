@@ -1,0 +1,15 @@
+version: '3.7'
+services:
+  postgresql:
+    container_name: cocktail-io-local-postgresql
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: cocktail-io-postgresql-db
+      POSTGRES_USER: cocktail-io
+      POSTGRES_PASSWORD: cocktail-io
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgresql-data:/var/lib/data/postgresql
+    networks:
+      - cocktail-io-local-network
